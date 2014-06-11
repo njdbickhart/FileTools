@@ -8,10 +8,12 @@ import TempFiles.TempDataClass;
 import TempFiles.TempDataStruct;
 import file.BedAbstract;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,7 +25,7 @@ import java.util.logging.Logger;
 public abstract class TempBed extends BedAbstract implements TempDataStruct{
     private Path tempFile;
     private BufferedReader handle;
-    
+    private BufferedWriter output;
        
     /**
      * Creates a temporary file that will be used to spill data to disk
@@ -57,11 +59,17 @@ public abstract class TempBed extends BedAbstract implements TempDataStruct{
     
     /**
      * This opens the temporary filehandle for reading
+     * @param mode Designates write status. Either R (read), W (write) or A (append)
      */    
     @Override
-    public void openTemp(){
+    public void openTemp(char mode){
         try{
-            this.handle = Files.newBufferedReader(tempFile, Charset.defaultCharset());
+            switch(mode){
+                case 'R' : this.handle = Files.newBufferedReader(tempFile, Charset.defaultCharset()); break;
+                case 'W' : this.output = Files.newBufferedWriter(tempFile, Charset.defaultCharset(), StandardOpenOption.WRITE); break;
+                case 'A' : this.output = Files.newBufferedWriter(tempFile, Charset.defaultCharset(), StandardOpenOption.APPEND); break;
+                default : throw new IOException("[TempFile] Must specify R, W, or A modes!");
+            }
         }catch(IOException | NullPointerException ex){
             Logger.getLogger(TempDataClass.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -70,11 +78,17 @@ public abstract class TempBed extends BedAbstract implements TempDataStruct{
     
     /**
      * This closes the temporary filehandle
+     * @param mode Designates write status. Either R (read), W (write) or A (append)
      */
     @Override
-    public void closeTemp(){
+    public void closeTemp(char mode){
         try{
-            this.handle.close();
+            switch(mode){
+                case 'R' : this.handle.close(); break;
+                case 'W' : this.output.close(); break;
+                case 'A' : this.output.close(); break;
+                default : throw new IOException("[TempFile] Must specify R, W, or A modes!");
+            }
         }catch(IOException | NullPointerException ex){
             Logger.getLogger(TempDataClass.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -17,9 +17,9 @@ public interface TempDataStruct {
     
     public void readSequentialFile();
     
-    public void closeTemp();
+    public void closeTemp(char mode);
     
-    public void openTemp();
+    public void openTemp(char mode);
     
     public void dumpDataToDisk();
 }
