@@ -22,6 +22,12 @@ import java.util.zip.GZIPInputStream;
  * @author bickhart
  */
 public class ReaderReturn {
+    /**
+     * This Static function returns the state of the file.
+     * True = file is zipped. False = file is not zipped.
+     * @param f File to check for zip status
+     * @return
+     */
     public static boolean isGZipped(File f) {
         int magic = 0;
         try {
@@ -33,10 +39,22 @@ public class ReaderReturn {
         }
         return magic == GZIPInputStream.GZIP_MAGIC;
    }
+    /**
+     * This function returns the base name of a file.
+     * Similar to basename functions in other languages.
+     * @param file is a string that will be dissected 
+     * @return
+     */
     public static String getBaseFileName(String file){
         String[] tokens = file.split("\\.(?=[^\\.]+$)");
         return tokens[0];
     }
+    /**
+     * This function returns a buffered reader for zipped and unzipped files.
+     * The appropriate reader is returned based on the file's zip status.
+     * @param file is the file to be opened
+     * @return
+     */
     public static BufferedReader openFile(File file){
         BufferedReader output = null;
         try {
