@@ -23,10 +23,10 @@ import java.util.logging.Logger;
  * genomic locations held within a central repository
  * @author bickhart
  */
-public abstract class BufferedBed extends BedAbstract implements TempDataStruct, TempBuffer{
+public abstract class BufferedBed extends BedAbstract implements TempDataStruct, TempBuffer<BedAbstract>{
     private Path tempFile;
-    private BufferedReader handle;
-    private BufferedWriter output;
+    protected BufferedReader handle;
+    protected BufferedWriter output;
     
     /**
      * Creates a temporary file that will be used to spill data to disk

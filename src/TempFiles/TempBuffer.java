@@ -8,7 +8,7 @@ package TempFiles;
  *
  * @author bickhart
  */
-public interface TempBuffer {
+public interface TempBuffer<T> {
     
     /**
      * This method adds objects to a collection for this class until a buffer
