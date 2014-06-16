@@ -10,6 +10,7 @@ import TempFiles.TempDataStruct;
 import file.BedAbstract;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -93,6 +94,11 @@ public abstract class BufferedBed extends BedAbstract implements TempDataStruct,
         }catch(IOException | NullPointerException ex){
             Logger.getLogger(TempDataClass.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public boolean hasTemp(){
+        File checker = this.tempFile.toFile();
+        return (checker.isFile() && checker.canRead());
     }
     
 }
