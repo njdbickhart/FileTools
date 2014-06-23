@@ -26,10 +26,14 @@ import java.util.logging.Logger;
  * for easier retrieval later. Currently only works on "BedSimple" entries
  * @author bickhart
  */
-public class TempBedMap extends BedMap implements TempDataStruct{
+public class TempBedMap extends BedMap<BedAbstract> implements TempDataStruct{
     private Path tempFile;
     private BufferedReader handle = null;  
     private BufferedWriter output = null;
+    
+    public TempBedMap(){
+        super();
+    }
     
     /**
      * Creates a temporary file that will be used to spill data to disk
@@ -120,6 +124,7 @@ public class TempBedMap extends BedMap implements TempDataStruct{
                 
                 if(!this.bedFile.containsKey(segs[0])){
                     this.bedFile.put(segs[0], new ConcurrentHashMap<Integer, ArrayList<BedAbstract>>());
+                    this.bedFile.get(segs[0]).put(bin, new ArrayList<BedAbstract>());
                 }
                 
                 if(!this.bedFile.get(segs[0]).containsKey(bin)){
