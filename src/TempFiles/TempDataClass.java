@@ -19,9 +19,9 @@ import java.util.logging.Logger;
  * @author bickhart
  */
 public abstract class TempDataClass implements TempDataStruct {
-    private Path tempFile;
-    private BufferedReader handle;
-    private BufferedWriter output;
+    protected Path tempFile;
+    protected BufferedReader handle;
+    protected BufferedWriter output;
     
     /**
      * Creates a temporary file that will be used to spill data to disk
