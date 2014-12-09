@@ -34,6 +34,7 @@ public abstract class TempDataClass implements TempDataStruct {
     public void createTemp(Path path){
         try {
             this.tempFile = Files.createTempFile(path.toString(), ".tmp");
+            this.tempFile.toFile().deleteOnExit();
         } catch (IOException ex) {
             Logger.getLogger(TempDataClass.class.getName()).log(Level.SEVERE, null, ex);
         }

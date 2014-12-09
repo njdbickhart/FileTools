@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  * @author bickhart
  */
 public abstract class BufferedBed extends BedAbstract implements TempDataStruct, TempBuffer<BedAbstract>{
-    private Path tempFile;
+    protected Path tempFile;
     protected BufferedReader handle;
     protected BufferedWriter output;
     
@@ -85,6 +85,8 @@ public abstract class BufferedBed extends BedAbstract implements TempDataStruct,
      */
     @Override
     public void closeTemp(char mode){
+        if(!this.hasTemp())
+            return;
         try{
             switch(mode){
                 case 'R' : this.handle.close(); break;
