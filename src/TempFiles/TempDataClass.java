@@ -82,10 +82,11 @@ public abstract class TempDataClass implements TempDataStruct {
     @Override
     public void closeTemp(char mode){
         try{
+            // change to automatically flush output when closing.
             switch(mode){
                 case 'R' : this.handle.close(); break;
-                case 'W' : this.output.close(); break;
-                case 'A' : this.output.close(); break;
+                case 'W' : 
+                case 'A' : this.output.flush(); this.output.close(); break;
                 default : throw new IOException("[TempFile] Must specify R, W, or A modes!");
             }
         }catch(IOException | NullPointerException ex){
