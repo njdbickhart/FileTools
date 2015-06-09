@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  * for easier retrieval later. Currently only works on "BedSimple" entries
  * @author bickhart
  */
-public class TempBedMap extends BedMap<BedAbstract> implements TempDataStruct{
+public class TempBedMap <T extends BedAbstract> extends BedMap<T> implements TempDataStruct{
     private Path tempFile;
     private BufferedReader handle = null;  
     private BufferedWriter output = null;
@@ -123,15 +123,15 @@ public class TempBedMap extends BedMap<BedAbstract> implements TempDataStruct{
                 int end = Integer.parseInt(segs[3]);
                 
                 if(!this.bedFile.containsKey(segs[0])){
-                    this.bedFile.put(segs[0], new ConcurrentHashMap<Integer, ArrayList<BedAbstract>>());
-                    this.bedFile.get(segs[0]).put(bin, new ArrayList<BedAbstract>());
+                    this.bedFile.put(segs[0], new ConcurrentHashMap<Integer, ArrayList<T>>());
+                    this.bedFile.get(segs[0]).put(bin, new ArrayList<T>());
                 }
                 
                 if(!this.bedFile.get(segs[0]).containsKey(bin)){
-                    this.bedFile.get(segs[0]).put(bin, new ArrayList<BedAbstract>());
+                    this.bedFile.get(segs[0]).put(bin, new ArrayList<T>());
                 }
                 
-                this.bedFile.get(segs[0]).get(bin).add(new BedSimple(segs[0], start, end, segs[4]));
+                this.bedFile.get(segs[0]).get(bin).add((T) new BedSimple(segs[0], start, end, segs[4]));
             }
         }catch(IOException | NullPointerException ex){
             Logger.getLogger(TempDataClass.class.getName()).log(Level.SEVERE, null, ex);
