@@ -27,9 +27,9 @@ import java.util.logging.Logger;
  * @author bickhart
  */
 public class TempBedMap <T extends BedAbstract> extends BedMap<T> implements TempDataStruct{
-    private Path tempFile;
-    private BufferedReader handle = null;  
-    private BufferedWriter output = null;
+    protected Path tempFile;
+    protected BufferedReader handle = null;  
+    protected BufferedWriter output = null;
     
     public TempBedMap(){
         super();
