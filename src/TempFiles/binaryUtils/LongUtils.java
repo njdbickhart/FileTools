@@ -36,6 +36,15 @@ public class LongUtils {
         return value;
     }
     
+    public static long byteArrayToLong(Byte[] b){
+        long value = 0l;
+        for (int i = 0; i < b.length; i++) {
+            int shift = (b.length - 1 - i) * 8;
+            value += (b[i] & 0x000000FF) << shift;
+        }
+        return value;
+    }
+    
     public static byte[] longToByteArray(long l){
         return ByteBuffer.allocate(8).putLong(0, l).array();
     }
